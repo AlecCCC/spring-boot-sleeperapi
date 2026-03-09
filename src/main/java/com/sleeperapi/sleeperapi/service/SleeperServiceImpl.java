@@ -3,10 +3,13 @@ package com.sleeperapi.sleeperapi.service;
 import com.sleeperapi.sleeperapi.dto.SleeperLeague;
 import com.sleeperapi.sleeperapi.dto.SleeperLeagueRoster;
 import com.sleeperapi.sleeperapi.dto.SleeperUser;
+import com.sleeperapi.sleeperapi.dto.league_user_data.SleeperLeagueUser;
+import com.sleeperapi.sleeperapi.dto.league_user_data.SleeperRosterWithUser;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -45,5 +48,40 @@ public class SleeperServiceImpl implements SleeperService{
         return restClient.get().uri("/league/{leagueId}/rosters", leagueId).retrieve().body(new ParameterizedTypeReference<List<SleeperLeagueRoster>>() {
         });
 
+    }
+
+    @Override
+    public List<SleeperLeagueUser> getLeagueUsers(String leagueId) {
+        return restClient.get().uri("/league/{leagueId}/users",leagueId).retrieve().body(new ParameterizedTypeReference<List<SleeperLeagueUser>>() {
+        });
+    }
+
+    @Override
+    public List<SleeperRosterWithUser> getRostersWithUsers(String leagueId) {
+
+        List<SleeperLeagueUser> users = getLeagueUsers(leagueId);
+        List<SleeperLeagueRoster> rosters = getRosters(leagueId);
+
+        List<SleeperRosterWithUser> result = new ArrayList<>();
+
+        for (SleeperLeagueRoster roster : rosters) {
+            String displayName = null;
+            String teamName = null;
+
+            for (SleeperLeagueUser user : users) {
+                if (user.getUserId().equals(roster.getOwnerId())) {
+                    displayName = user.getDisplayName();
+                    if (user.getMetaData() != null) {
+                        teamName = user.getMetaData().getTeamName();
+                    }
+                    break;
+                }
+            }
+
+            result.add(new SleeperRosterWithUser(roster, displayName, teamName));
+
+        }
+
+        return result;
     }
 }

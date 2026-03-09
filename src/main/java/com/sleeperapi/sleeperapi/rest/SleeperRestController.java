@@ -3,6 +3,8 @@ package com.sleeperapi.sleeperapi.rest;
 import com.sleeperapi.sleeperapi.dto.SleeperLeague;
 import com.sleeperapi.sleeperapi.dto.SleeperLeagueRoster;
 import com.sleeperapi.sleeperapi.dto.SleeperUser;
+import com.sleeperapi.sleeperapi.dto.league_user_data.SleeperLeagueUser;
+import com.sleeperapi.sleeperapi.dto.league_user_data.SleeperRosterWithUser;
 import com.sleeperapi.sleeperapi.service.SleeperService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,9 +34,14 @@ public class SleeperRestController {
         return sleeperService.getLeagues(username, year);
     }
 
+    @GetMapping("/league/{leagueId}/league-users")
+    public List<SleeperLeagueUser> getLeagueUsers(@PathVariable String leagueId) {
+        return sleeperService.getLeagueUsers(leagueId);
+    }
+
     @GetMapping("/league/{leagueId}/rosters")
-    public List<SleeperLeagueRoster> getRosters(@PathVariable String leagueId) {
-        return sleeperService.getRosters(leagueId);
+    public List<SleeperRosterWithUser> getRosters(@PathVariable String leagueId) {
+        return sleeperService.getRostersWithUsers(leagueId);
     }
 
 
