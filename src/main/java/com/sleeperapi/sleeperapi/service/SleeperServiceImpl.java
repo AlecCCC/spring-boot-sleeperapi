@@ -1,6 +1,7 @@
 package com.sleeperapi.sleeperapi.service;
 
 import com.sleeperapi.sleeperapi.dto.SleeperLeague;
+import com.sleeperapi.sleeperapi.dto.SleeperLeagueRoster;
 import com.sleeperapi.sleeperapi.dto.SleeperUser;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
@@ -36,5 +37,13 @@ public class SleeperServiceImpl implements SleeperService{
                 .uri("/user/{id}/leagues/nfl/{year}", sleeperId, year)
                 .retrieve()
                 .body(new ParameterizedTypeReference<List<SleeperLeague>>() {});
+    }
+
+    @Override
+    public List<SleeperLeagueRoster> getRosters(String leagueId) {
+
+        return restClient.get().uri("/league/{leagueId}/rosters", leagueId).retrieve().body(new ParameterizedTypeReference<List<SleeperLeagueRoster>>() {
+        });
+
     }
 }
