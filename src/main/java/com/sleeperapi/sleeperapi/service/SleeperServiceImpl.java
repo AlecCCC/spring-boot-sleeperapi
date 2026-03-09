@@ -1,8 +1,12 @@
 package com.sleeperapi.sleeperapi.service;
 
+import com.sleeperapi.sleeperapi.dto.SleeperLeague;
 import com.sleeperapi.sleeperapi.dto.SleeperUser;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
+
+import java.util.List;
 
 @Service
 public class SleeperServiceImpl implements SleeperService{
@@ -19,5 +23,18 @@ public class SleeperServiceImpl implements SleeperService{
     @Override
     public SleeperUser getSleeperUser(String username) {
         return restClient.get().uri("/user/{username}", username).retrieve().body(SleeperUser.class);
+    }
+
+
+    @Override
+    public List<SleeperLeague> getLeagues(String username, String year) {
+
+        SleeperUser user = getSleeperUser(username);
+        String sleeperId = user.getUserId();
+
+        return restClient.get()
+                .uri("/user/{id}/leagues/nfl/{year}", sleeperId, year)
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<SleeperLeague>>() {});
     }
 }
