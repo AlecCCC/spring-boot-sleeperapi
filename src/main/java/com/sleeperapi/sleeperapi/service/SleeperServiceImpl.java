@@ -67,10 +67,12 @@ public class SleeperServiceImpl implements SleeperService{
         for (SleeperLeagueRoster roster : rosters) {
             String displayName = null;
             String teamName = null;
+            String avatar = null;
 
             for (SleeperLeagueUser user : users) {
                 if (user.getUserId().equals(roster.getOwnerId())) {
                     displayName = user.getDisplayName();
+                    avatar = user.getAvatar();
                     if (user.getMetaData() != null) {
                         teamName = user.getMetaData().getTeamName();
                     }
@@ -78,7 +80,7 @@ public class SleeperServiceImpl implements SleeperService{
                 }
             }
 
-            result.add(new SleeperRosterWithUser(roster, displayName, teamName));
+            result.add(new SleeperRosterWithUser(roster, displayName, teamName, avatar));
 
         }
 

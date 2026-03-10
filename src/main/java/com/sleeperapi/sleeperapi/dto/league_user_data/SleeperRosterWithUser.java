@@ -7,14 +7,16 @@ public class SleeperRosterWithUser {
     private SleeperLeagueRoster sleeperLeagueRoster;
     private String displayName;
     private String teamname;
+    private String userAvatar;
 
     public SleeperRosterWithUser() {
     }
 
-    public SleeperRosterWithUser(SleeperLeagueRoster sleeperLeagueRoster, String displayName, String teamname) {
+    public SleeperRosterWithUser(SleeperLeagueRoster sleeperLeagueRoster, String displayName, String teamname, String avatar) {
         this.sleeperLeagueRoster = sleeperLeagueRoster;
         this.displayName = displayName;
         this.teamname = teamname;
+        this.userAvatar = avatar;
     }
 
     public SleeperLeagueRoster getSleeperLeagueRoster() {
@@ -39,5 +41,13 @@ public class SleeperRosterWithUser {
 
     public void setTeamname(String teamname) {
         this.teamname = teamname;
+    }
+
+    public String getAvatar() {
+        return userAvatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.userAvatar = avatar;
     }
 }
