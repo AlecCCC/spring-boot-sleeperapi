@@ -1,4 +1,4 @@
-package com.sleeperapi.sleeperapi.dto;
+package com.sleeperapi.sleeperapi.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,6 +16,23 @@ public class SleeperUser {
 
     @JsonProperty(value = "username")
     private String userName;
+
+    private Metadata metadata;
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class Metadata {
+
+        @JsonProperty(value = "team_name")
+        private String teamName;
+
+        public String getTeamName() {
+            return teamName;
+        }
+
+        public void setTeamName(String teamName) {
+            this.teamName = teamName;
+        }
+    }
 
     public String getAvatar() {
         return avatar;
@@ -49,6 +66,14 @@ public class SleeperUser {
         this.userName = userName;
     }
 
+    public Metadata getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(Metadata metadata) {
+        this.metadata = metadata;
+    }
+
     @Override
     public String toString() {
         return "SleeperUser{" +
@@ -56,6 +81,7 @@ public class SleeperUser {
                 ", displayName='" + displayName + '\'' +
                 ", userId='" + userId + '\'' +
                 ", userName='" + userName + '\'' +
+                ", metadata=" + metadata +
                 '}';
     }
 }
