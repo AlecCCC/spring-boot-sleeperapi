@@ -1,11 +1,12 @@
 package com.sleeperapi.sleeperapi.pojo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.util.List;
 import java.util.Map;
 
-public class SleeperRoster {
+public class SleeperRoster extends RepresentationModel<SleeperRoster> {
 
     @JsonProperty("roster_id")
     int rosterId;

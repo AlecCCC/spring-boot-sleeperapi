@@ -2,9 +2,10 @@ package com.sleeperapi.sleeperapi.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.hateoas.RepresentationModel;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SleeperUser {
+public class SleeperUser extends RepresentationModel<SleeperUser> {
 
     private String avatar;
 

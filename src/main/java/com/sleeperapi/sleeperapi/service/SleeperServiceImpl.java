@@ -117,8 +117,12 @@ public class SleeperServiceImpl implements SleeperService {
     // Takes a list of player IDs, looks each one up in the players.json map
     private List<PlayerInfo> convertToPlayerInfo(List<String> playerIds) {
 
-        List<PlayerInfo> result = new ArrayList<>();
+        // If the list is null, return an empty list instead of crashing
+        if (playerIds == null) {
+            return new ArrayList<>();
+        }
 
+        List<PlayerInfo> result = new ArrayList<>();
         Map<String, Object> allPlayers = nflPlayerData.getPlayers();
 
         for (String playerId : playerIds) {

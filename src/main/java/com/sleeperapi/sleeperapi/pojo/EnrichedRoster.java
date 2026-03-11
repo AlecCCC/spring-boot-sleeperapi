@@ -1,9 +1,11 @@
 package com.sleeperapi.sleeperapi.pojo;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import java.util.List;
 import java.util.Map;
 
-public class EnrichedRoster {
+public class EnrichedRoster extends RepresentationModel<EnrichedRoster> {
 
     private int rosterId;
     private String ownerId;
