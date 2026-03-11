@@ -65,14 +65,16 @@ public class SleeperServiceImpl implements SleeperService {
 
         for (SleeperMatchup matchup : raw) {
 
-            String displayName = "Unknown";
+            String displayName = null;
             String teamName = null;
+            String avatar = null;
 
             // Find the enriched roster where roster_id matches
             for (EnrichedRoster roster : enrichedRosters) {
                 if (roster.getRosterId() == matchup.getRosterId()) {
                     displayName = roster.getDisplayName();
                     teamName = roster.getTeamName();
+                    avatar = roster.getAvatar();
                 }
             }
 
@@ -86,7 +88,8 @@ public class SleeperServiceImpl implements SleeperService {
                     starters,
                     players,
                     displayName,
-                    teamName
+                    teamName,
+                    avatar
             ));
         }
 
