@@ -1,8 +1,10 @@
 package com.sleeperapi.sleeperapi.rest;
 
 import com.sleeperapi.sleeperapi.pojo.EnrichedRoster;
+import com.sleeperapi.sleeperapi.pojo.matchup.Matchup;
 import com.sleeperapi.sleeperapi.pojo.SleeperLeague;
 import com.sleeperapi.sleeperapi.pojo.SleeperUser;
+import com.sleeperapi.sleeperapi.pojo.matchup.SleeperMatchup;
 import com.sleeperapi.sleeperapi.service.SleeperService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,6 +43,11 @@ public class SleeperRestController {
     @GetMapping("/league/{leagueId}/rosters")
     public List<EnrichedRoster> getEnrichedRosters(@PathVariable String leagueId) {
         return sleeperService.getEnrichedRosters(leagueId);
+    }
+
+    @GetMapping("/league/{leagueId}/matchups/{week}")
+    public List<Matchup> getMatchups(@PathVariable String leagueId, @PathVariable String week) {
+        return sleeperService.getMatchups(leagueId, week);
     }
 
 

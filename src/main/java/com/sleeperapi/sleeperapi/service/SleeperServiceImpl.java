@@ -1,6 +1,9 @@
 package com.sleeperapi.sleeperapi.service;
 
 import com.sleeperapi.sleeperapi.pojo.*;
+import com.sleeperapi.sleeperapi.pojo.matchup.Matchup;
+import com.sleeperapi.sleeperapi.pojo.matchup.MatchupPlayer;
+import com.sleeperapi.sleeperapi.pojo.matchup.SleeperMatchup;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -46,6 +49,35 @@ public class SleeperServiceImpl implements SleeperService {
                 .body(new ParameterizedTypeReference<List<SleeperUser>>() {
                 });
     }
+
+
+    @Override
+    public List<Matchup> getMatchups(String leagueId, String week) {
+
+        List<SleeperMatchup> raw = restClient.get()
+                .uri("/league/{leagueId}/matchups/{week}", leagueId, week)
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<SleeperMatchup>>() {});
+
+        List<Matchup> result = new ArrayList<>();
+
+        for (SleeperMatchup matchup : raw) {
+
+            List<MatchupPlayer> starters = convertToMatchupPlayer(matchup.getStarters(), matchup.getPlayersPoints());
+            List<MatchupPlayer> players = convertToMatchupPlayer(matchup.getPlayers(), matchup.getPlayersPoints());
+
+            result.add(new Matchup(
+                    matchup.getRosterId(),
+                    matchup.getMatchupId(),
+                    matchup.getPoints(),
+                    starters,
+                    players
+            ));
+        }
+
+        return result;
+    }
+
 
     @Override
     public List<EnrichedRoster> getEnrichedRosters(String leagueId) {
@@ -114,6 +146,38 @@ public class SleeperServiceImpl implements SleeperService {
 
 
 
+//    HELPER FUNCTIONS
+
+    private List<MatchupPlayer> convertToMatchupPlayer(List<String> playerIds, Map<String, Double> playerPoints) {
+
+        if (playerIds == null) {
+            return new ArrayList<>();
+        }
+
+        List<MatchupPlayer> result = new ArrayList<>();
+        Map<String, Object> allPlayers = nflPlayerData.getPlayers();
+
+        for (String playerId : playerIds) {
+
+            if (playerId.equals("0")) {
+                continue;
+            }
+
+            Map<String, Object> playerData = (Map<String, Object>) allPlayers.get(playerId);
+            double points = playerPoints != null ? playerPoints.getOrDefault(playerId, 0.0) : 0.0;
+
+            if (playerData != null) {
+                String firstName = (String) playerData.get("first_name");
+                String lastName = (String) playerData.get("last_name");
+                String position = (String) playerData.get("position");
+                result.add(new MatchupPlayer(playerId, firstName, lastName, position, points));
+            } else {
+                result.add(new MatchupPlayer(playerId, "Unknown", "Unknown", "Unknown", points));
+            }
+        }
+
+        return result;
+    }
     // Takes a list of player IDs, looks each one up in the players.json map
     private List<PlayerInfo> convertToPlayerInfo(List<String> playerIds) {
 
@@ -137,4 +201,6 @@ public class SleeperServiceImpl implements SleeperService {
 
         return result;
     }
+
+
 }
