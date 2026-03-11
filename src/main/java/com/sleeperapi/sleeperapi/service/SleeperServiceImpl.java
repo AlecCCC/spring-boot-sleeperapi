@@ -59,22 +59,34 @@ public class SleeperServiceImpl implements SleeperService {
                 .retrieve()
                 .body(new ParameterizedTypeReference<List<SleeperMatchup>>() {});
 
+        List<EnrichedRoster> enrichedRosters = getEnrichedRosters(leagueId);
 
         List<Matchup> result = new ArrayList<>();
 
         for (SleeperMatchup matchup : raw) {
 
+            String displayName = "Unknown";
+            String teamName = null;
+
+            // Find the enriched roster where roster_id matches
+            for (EnrichedRoster roster : enrichedRosters) {
+                if (roster.getRosterId() == matchup.getRosterId()) {
+                    displayName = roster.getDisplayName();
+                    teamName = roster.getTeamName();
+                }
+            }
 
             List<MatchupPlayer> starters = convertToMatchupPlayer(matchup.getStarters(), matchup.getPlayersPoints());
             List<MatchupPlayer> players = convertToMatchupPlayer(matchup.getPlayers(), matchup.getPlayersPoints());
-
 
             result.add(new Matchup(
                     matchup.getRosterId(),
                     matchup.getMatchupId(),
                     matchup.getPoints(),
                     starters,
-                    players
+                    players,
+                    displayName,
+                    teamName
             ));
         }
 
