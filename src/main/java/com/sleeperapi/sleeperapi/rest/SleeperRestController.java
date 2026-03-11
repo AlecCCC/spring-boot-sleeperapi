@@ -26,6 +26,11 @@ public class SleeperRestController {
         return sleeperService.getSleeperUser(username);
     }
 
+    @GetMapping("/league/{leagueId}/users")
+    public List<SleeperUser> getLeagueUsers(@PathVariable String leagueId) {
+        return sleeperService.getLeagueUsers(leagueId);
+    }
+
     @GetMapping("/league/{leagueId}/rosters")
     public List<EnrichedRoster> getEnrichedRosters(@PathVariable String leagueId) {
         return sleeperService.getEnrichedRosters(leagueId);

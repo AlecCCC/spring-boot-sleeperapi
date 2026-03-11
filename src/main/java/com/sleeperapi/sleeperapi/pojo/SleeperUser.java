@@ -8,6 +8,8 @@ public class SleeperUser {
 
     private String avatar;
 
+    private String league_id;
+
     @JsonProperty(value = "display_name")
     private String displayName;
 
@@ -29,49 +31,32 @@ public class SleeperUser {
             return teamName;
         }
 
-        public void setTeamName(String teamName) {
-            this.teamName = teamName;
-        }
     }
 
     public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
 
     public String getDisplayName() {
         return displayName;
     }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
 
     public String getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
-    public String getUserName() {
-        return userName;
-    }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     public Metadata getMetadata() {
         return metadata;
     }
 
-    public void setMetadata(Metadata metadata) {
-        this.metadata = metadata;
+
+    public String getLeague_id() {
+        return league_id;
     }
 
     @Override

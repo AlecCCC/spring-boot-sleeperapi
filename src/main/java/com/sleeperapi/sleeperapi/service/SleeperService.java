@@ -11,5 +11,7 @@ public interface SleeperService {
 
     List<EnrichedRoster> getEnrichedRosters(String leagueId);
 
+    List<SleeperUser> getLeagueUsers(String leagueId);
+
 
 }

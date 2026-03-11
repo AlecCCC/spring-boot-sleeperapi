@@ -24,49 +24,23 @@ public class SleeperRoster {
         return rosterId;
     }
 
-    public void setRosterId(int rosterId) {
-        this.rosterId = rosterId;
-    }
-
     public String getOwnerId() {
         return ownerId;
-    }
-
-    public void setOwnerId(String ownerId) {
-        this.ownerId = ownerId;
     }
 
     public List<String> getPlayers() {
         return players;
     }
 
-    public void setPlayers(List<String> players) {
-        this.players = players;
-    }
-
     public List<String> getStarters() {
         return starters;
-    }
-
-    public void setStarters(List<String> starters) {
-        this.starters = starters;
     }
 
     public Map<String, Object> getSettings() {
         return settings;
     }
 
-    public void setSettings(Map<String, Object> settings) {
-        this.settings = settings;
-    }
-
     public Map<String, String> getMetadata() {
         return metadata;
     }
-
-    public void setMetadata(Map<String, String> metadata) {
-        this.metadata = metadata;
-    }
-
-
 }

@@ -46,5 +46,15 @@ public class NFLPlayerData {
         objectMapper.writeValue(new File("players.json"), players);
     }
 
+    public RestClient getRestClient() {
+        return restClient;
+    }
 
+    public ObjectMapper getObjectMapper() {
+        return objectMapper;
+    }
+
+    public Map<String, Object> getPlayers() {
+        return players;
+    }
 }
