@@ -59,17 +59,11 @@ public class SleeperServiceImpl implements SleeperService {
                 .retrieve()
                 .body(new ParameterizedTypeReference<List<SleeperMatchup>>() {});
 
-        List<SleeperRoster> rosters = restClient.get()
-                .uri("/league/{leagueId}/rosters", leagueId)
-                .retrieve()
-                .body(new ParameterizedTypeReference<List<SleeperRoster>>() {});
 
         List<Matchup> result = new ArrayList<>();
 
         for (SleeperMatchup matchup : raw) {
 
-            String teamName = null;
-            String userName = null;
 
             List<MatchupPlayer> starters = convertToMatchupPlayer(matchup.getStarters(), matchup.getPlayersPoints());
             List<MatchupPlayer> players = convertToMatchupPlayer(matchup.getPlayers(), matchup.getPlayersPoints());
