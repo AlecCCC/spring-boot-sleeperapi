@@ -1,6 +1,7 @@
 package com.sleeperapi.sleeperapi.rest;
 
 import com.sleeperapi.sleeperapi.pojo.EnrichedRoster;
+import com.sleeperapi.sleeperapi.pojo.SleeperLeague;
 import com.sleeperapi.sleeperapi.pojo.SleeperUser;
 import com.sleeperapi.sleeperapi.service.SleeperService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,10 +27,16 @@ public class SleeperRestController {
         return sleeperService.getSleeperUser(username);
     }
 
+    @GetMapping("/user/{userId}/leagues/{year}")
+    public List<SleeperLeague> getUserLeagues(@PathVariable String userId, @PathVariable String year) {
+        return sleeperService.getSleeperLeagues(userId, year);
+    }
+
     @GetMapping("/league/{leagueId}/users")
     public List<SleeperUser> getLeagueUsers(@PathVariable String leagueId) {
         return sleeperService.getLeagueUsers(leagueId);
     }
+
 
     @GetMapping("/league/{leagueId}/rosters")
     public List<EnrichedRoster> getEnrichedRosters(@PathVariable String leagueId) {

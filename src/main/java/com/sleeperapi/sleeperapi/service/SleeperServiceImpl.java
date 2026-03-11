@@ -1,9 +1,6 @@
 package com.sleeperapi.sleeperapi.service;
 
-import com.sleeperapi.sleeperapi.pojo.EnrichedRoster;
-import com.sleeperapi.sleeperapi.pojo.PlayerInfo;
-import com.sleeperapi.sleeperapi.pojo.SleeperRoster;
-import com.sleeperapi.sleeperapi.pojo.SleeperUser;
+import com.sleeperapi.sleeperapi.pojo.*;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -30,6 +27,15 @@ public class SleeperServiceImpl implements SleeperService {
                 .uri("/user/{username}", username)
                 .retrieve()
                 .body(SleeperUser.class);
+    }
+
+    @Override
+    public List<SleeperLeague> getSleeperLeagues(String userId, String year) {
+        return restClient.get()
+                .uri("/user/{username}/leagues/nfl/{year}", userId, year)
+                .retrieve()
+                .body(new ParameterizedTypeReference<List<SleeperLeague>>() {
+                });
     }
 
     @Override
