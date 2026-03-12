@@ -84,15 +84,16 @@ public class SleeperServiceImpl implements SleeperService {
             result.add(new Matchup(
                     matchup.getRosterId(),
                     matchup.getMatchupId(),
-                    matchup.getPoints(),
-                    starters,
-                    players,
                     displayName,
                     teamName,
-                    avatar
+                    avatar,
+                    matchup.getPoints(),
+                    starters,
+                    players
             ));
         }
 
+        result.sort((a, b) -> Integer.compare(a.getMatchupId(), b.getMatchupId()));
         return result;
     }
 
