@@ -197,6 +197,7 @@ public class SleeperServiceImpl implements SleeperService {
 
         return result;
     }
+
     // Takes a list of player IDs, looks each one up in the players.json map
     private List<PlayerInfo> convertToPlayerInfo(List<String> playerIds) {
 
